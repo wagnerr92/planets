@@ -9,17 +9,24 @@ import rp.consulting.planets.R
 
 class PlanetsAdapter : RecyclerView.Adapter<PlanetsAdapter.ViewHolder>() {
 
+    private lateinit var data: List<PlanetData>
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.planets_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return 8
+        return data.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(PlanetData("Terra", "Unico planeta com vida"))
+        holder.bind(data[position])
+    }
+
+    fun setData(list: List<PlanetData>) {
+        this.data = list
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
