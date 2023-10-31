@@ -3,9 +3,12 @@ package rp.consulting.planets.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import rp.consulting.planets.data.PlanetRepository
 
 class PlanetListViewModel : ViewModel() {
 
+
+    private val repository = PlanetRepository()
     private val state = MutableLiveData<State>()
     val viewState: LiveData<State>
         get() = state
@@ -13,15 +16,8 @@ class PlanetListViewModel : ViewModel() {
     fun loadData() {
         state.value = State.Loading
 
-        state.value = State.Content(
-            listOf(
-                PlanetData("Terra", "Descricao Terra"),
-                PlanetData("Jupiter", "Descricao Jupiter"),
-                PlanetData("Mercúrio", "Descricao Mercúrio")
-            )
-        )
-
-        state.value = State.Error
+        val planets = repository.getPlanetList()
+        state.value = State.Content(planets)
     }
 }
 
