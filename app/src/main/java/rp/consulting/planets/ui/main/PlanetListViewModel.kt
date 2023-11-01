@@ -21,9 +21,6 @@ class PlanetListViewModel : ViewModel() {
             val planets = repository.getPlanetList()
             state.value = State.Content(planets)
         }
-
-
-
     }
 }
 
