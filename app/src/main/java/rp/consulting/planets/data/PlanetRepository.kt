@@ -3,17 +3,17 @@ package rp.consulting.planets.data
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import rp.consulting.planets.data.api.PlanetsClient
 import rp.consulting.planets.ui.main.PlanetData
 
 class PlanetRepository {
-    suspend fun getPlanetList() : List<PlanetData>{
+
+    private val service = PlanetsClient.getService()
+    suspend fun getPlanetList(): List<PlanetData> {
         return withContext(Dispatchers.IO){
-            delay(4000)
-            listOf(
-                PlanetData("Terra", "Descricao Terra"),
-                PlanetData("Jupiter", "Descricao Jupiter"),
-                PlanetData("Mercúrio", "Descricao Mercúrio")
-            )
+           service.getPlanets().map{
+               PlanetData(it.name, it.description)
+           }
         }
     }
 }
