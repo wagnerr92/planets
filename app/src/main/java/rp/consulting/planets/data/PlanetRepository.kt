@@ -1,14 +1,12 @@
 package rp.consulting.planets.data
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import rp.consulting.planets.data.api.PlanetsClient
+import rp.consulting.planets.data.api.PlanetsService
 import rp.consulting.planets.ui.main.PlanetData
+import javax.inject.Inject
 
-class PlanetRepository {
-
-    private val service = PlanetsClient.getService()
+class PlanetRepository @Inject constructor(private val service: PlanetsService) {
     suspend fun getPlanetList(): List<PlanetData> {
         return withContext(Dispatchers.IO){
            service.getPlanets().map{
